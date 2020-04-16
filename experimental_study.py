@@ -14,7 +14,7 @@ def my_linear_search(my_list,item_search): #O(n)
             break 
     return found
 
-def my_experimental_study(iterNum=50):
+def my_experimental_study_linear(iterNum=50):
     cost=[]
     x_low=-100
     x_high=+100
@@ -33,8 +33,74 @@ def my_experimental_study(iterNum=50):
         print(result)
     return cost
     
-c_s=my_experimental_study()
+c_s_l=my_experimental_study_linear()
 
-import matplotlib.pyplot as plt
-c_s
-plt.plot(c_s)
+##import matplotlib.pyplot as plt
+c_s_l
+##plt.plot(c_s_l)
+
+def my_binary_search(my_list, item_search):
+    found=(-1,-1,0)
+    low = 0
+    high = len(my_list) - 1
+    s=0
+    while low <= high:
+        mid = (low + high) // 2
+        print(low,high,mid)
+        s=s+1
+        if my_list[mid] == item_search:
+            return my_list[mid],mid,s
+        elif my_list[mid] > item_search:
+            high = mid - 1
+        else:
+            low = mid + 1
+    print(s)
+
+    return found[0], found[1],s
+
+def my_bubble_sort(my_list):
+    n=len(my_list)
+    for i in range(n-1,-1,-1):
+        for j in range(0,i):
+            if not(my_list[j]<my_list[j+1]):
+                temp=my_list[j]
+                my_list[j]=my_list[j+1]
+                my_list[j+1]=temp
+    return my_list
+
+x_low=-100
+x_high=+100
+array_size=4
+my_list=get_n_random_numbers(array_size,x_low,x_high)
+my_list
+my_list=my_bubble_sort(my_list)
+my_list
+my_search_item=get_n_random_numbers(1,x_low,x_high)
+my_search_item
+my_search_item=my_search_item[0]
+
+my_binary_search(my_list,my_search_item)
+
+
+def my_experimental_study_binary(iterNum=50):
+    cost=[]
+    x_low=-100
+    x_high=+100
+    array_size=40
+    print("array size : ", array_size)
+    for iteration in range(iterNum):
+        my_list=get_n_random_numbers(array_size,x_low,x_high)
+        my_list=my_bubble_sort(my_list)
+        
+        my_search_item=get_n_random_numbers(1,x_low,x_high)
+        my_search_item=my_search_item[0]
+        result=my_binary_search(my_list,my_search_item)
+        cost.append(result[2])
+    return cost
+
+c_s_b=my_experimental_study_binary()
+c_s_b
+
+##plt.subplot(1,2,1),plt.plot(c_s_b)
+##plt.subplot(1,2,2),plt.plot(c_s_l)
+##plt.show()
